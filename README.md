@@ -59,6 +59,4 @@ Machine learning pipeline using real market data and feature engineering for fin
 Experimental NLP project comparing full fine-tuning, LoRA adaptation, and prompt-based classification strategies using DistilBERT.
 
 ## Contact
-GitHub: https://github.com/CzPhantom10
-
 Email: ps826105@gmail.com
