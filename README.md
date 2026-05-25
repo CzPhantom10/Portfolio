@@ -60,4 +60,5 @@ Experimental NLP project comparing full fine-tuning, LoRA adaptation, and prompt
 
 ## Contact
 GitHub: https://github.com/CzPhantom10
+
 Email: ps826105@gmail.com
