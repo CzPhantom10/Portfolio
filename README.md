@@ -1,73 +1,63 @@
-# React + TypeScript + Vite
+# Prateek Sinha — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern editorial-style developer portfolio built to showcase my work in AI systems, intelligent applications, and software engineering.
 
-Currently, two official plugins are available:
+## About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This portfolio highlights my projects, hackathon experience, technical skills, and engineering approach with a clean, recruiter-focused design inspired by modern editorial and SaaS aesthetics.
 
-## React Compiler
+The website focuses on:
+- intelligent systems
+- applied AI engineering
+- clean software architecture
+- modern frontend design
+- responsive user experience
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Vite
+- Lucide React
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Editorial-inspired modern UI
+- Fully responsive design
+- Dark / Light theme toggle
+- Smooth and minimal animations
+- Recruiter-focused project showcase
+- Premium typography and layout system
+- Optimized for both desktop and mobile
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Featured Projects
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### LawGPT
+Domain-specific legal language model fine-tuned on Indian legal datasets for constitutional, criminal, and civil law workflows.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### RAG Chatbot System
+Retrieval-augmented generation pipeline with modular ingestion, embedding, retrieval, and response workflows.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### APEX AI Survival Arena
+Multi-agent reinforcement learning environment featuring DQN-based survival agents and dynamic simulation systems.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### QuestMint
+AI-powered web3 gaming platform combining blockchain systems, procedural gameplay, and full-stack engineering.
+
+### ChikitchakAI
+Healthcare-focused AI platform designed to improve accessibility through intelligent analysis and modular backend systems.
+
+### LLM From Scratch
+Educational transformer implementation exploring tokenization, training dynamics, and low-level language model internals.
+
+### Stock Price Predictor
+Machine learning pipeline using real market data and feature engineering for financial forecasting experimentation.
+
+### DistilBERT AG News – Full FT vs LoRA vs Prompting
+Experimental NLP project comparing full fine-tuning, LoRA adaptation, and prompt-based classification strategies using DistilBERT.
+
+## Contact
+GitHub: https://github.com/CzPhantom10
+Email: ps826105@gmail.com
