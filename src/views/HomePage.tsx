@@ -34,7 +34,7 @@ export function HomePage() {
             <span className="font-mono">{person.terminalIntro}</span>
           </div>
 
-          <h1 className="display mt-6 text-[clamp(2.4rem,8vw,3.75rem)] font-semibold leading-[1.05] sm:text-7xl">
+          <h1 className="display mt-6 text-[clamp(2.4rem,8vw,3.75rem)] font-extrabold leading-[1.05] sm:text-7xl text-gradient">
             <span className="block">{headlineLine1}</span>
             {headlineLine2 ? <span className="block">{headlineLine2}</span> : null}
           </h1>
@@ -145,26 +145,28 @@ export function HomePage() {
 
       <div className="h-px w-full hairline" />
 
-      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {[
-          {
-            title: 'Recruiter-first clarity',
-            desc: 'Tight summaries, readable stacks, and quick access to repos.',
-          },
-          {
-            title: 'Systems mindset',
-            desc: 'I build end-to-end pipelines: ingestion → retrieval → reasoning → UX.',
-          },
-          {
-            title: 'Premium execution',
-            desc: 'Typography, spacing, and motion tuned for a polished presentation.',
-          },
-        ].map((c) => (
-          <div key={c.title} className="panel panel-hover p-7">
-            <div className="text-sm font-semibold tracking-tight">{c.title}</div>
-            <p className="mt-3 text-[15px] leading-relaxed text-muted">{c.desc}</p>
-          </div>
-        ))}
+      <section className="panel p-8 sm:p-10">
+        <div className="grid gap-8 md:grid-cols-3 md:divide-x md:divide-border/80">
+          {[
+            {
+              title: 'Recruiter-first clarity',
+              desc: 'Tight summaries, readable stacks, and quick access to repos.',
+            },
+            {
+              title: 'Systems mindset',
+              desc: 'I build end-to-end pipelines: ingestion → retrieval → reasoning → UX.',
+            },
+            {
+              title: 'Premium execution',
+              desc: 'Typography, spacing, and motion tuned for a polished presentation.',
+            },
+          ].map((c, idx) => (
+            <div key={c.title} className={idx > 0 ? "md:pl-8" : ""}>
+              <h3 className="text-base font-bold tracking-tight text-gradient font-mono">{c.title}</h3>
+              <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-muted">{c.desc}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section>
