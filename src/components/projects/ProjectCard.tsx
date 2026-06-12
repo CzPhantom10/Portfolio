@@ -13,28 +13,28 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
 
           <div className="flex items-center gap-2">
-          <a
-            className="btn h-10 w-10 px-0"
-            href={project.repoUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`${project.title} repository`}
-            title="Repository"
-          >
-            <Code className="size-4" />
-          </a>
-          {project.demoUrl ? (
             <a
               className="btn h-10 w-10 px-0"
-              href={project.demoUrl}
+              href={project.repoUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label={`${project.title} demo`}
-              title="Live / Demo"
+              aria-label={`${project.title} repository`}
+              title="Repository"
             >
-              <ArrowUpRight className="size-4" />
+              <Code className="size-4" />
             </a>
-          ) : null}
+            {project.demoUrl ? (
+              <a
+                className="btn h-10 w-10 px-0"
+                href={project.demoUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${project.title} demo`}
+                title="Live / Demo"
+              >
+                <ArrowUpRight className="size-4" />
+              </a>
+            ) : null}
           </div>
         </div>
 

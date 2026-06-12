@@ -146,7 +146,7 @@ export function HomePage() {
       <div className="h-px w-full hairline" />
 
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {[ 
+        {[
           {
             title: 'Recruiter-first clarity',
             desc: 'Tight summaries, readable stacks, and quick access to repos.',

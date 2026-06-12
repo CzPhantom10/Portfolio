@@ -13,7 +13,7 @@ export const person = {
   name: 'Prateek Sinha',
   headline: "Hey There, I'm Prateek.",
   subheadline:
-    'CSE student at SRM Institute of Science and Technology. I build AI systems across LLMs, RAG, and reinforcement learning — with a strong focus on practical problem solving.',
+    'CSE student at SRM Institute of Science and Technology. I build AI systems across LLMs, RAG, and reinforcement learning with a strong focus on practical problem solving.',
   terminalIntro: 'prateek@portfolio:~$ whoami',
   terminalOutput: 'AI systems engineer • LLMs • RAG • RL',
   email: 'ps826105@gmail.com',
