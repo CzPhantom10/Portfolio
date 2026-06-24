@@ -4,7 +4,7 @@ import { Tag } from '../ui/Tag'
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="panel rounded-[24px] group p-8 sm:p-10 transition-all duration-300 hover:border-accent hover:bg-[#17151c] flex flex-col justify-between h-full">
+    <article className="panel rounded-2xl group p-8 sm:p-10 transition-all duration-300 hover:border-accent flex flex-col justify-between h-full">
       <div className="flex flex-col gap-5">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -51,7 +51,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <ul className="flex flex-col gap-2.5 text-sm text-muted/90 sm:text-[14px] font-mono mt-1">
           {project.highlights.map((h) => (
             <li key={h} className="flex gap-2 items-start">
-              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#a78bfa]" />
+              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
               <span>{h}</span>
             </li>
           ))}
@@ -60,13 +60,13 @@ export function ProjectCard({ project }: { project: Project }) {
 
       <div className="flex items-center justify-between border-t border-border/50 pt-5 mt-6">
         <span className="text-xs font-mono text-muted/80 flex items-center gap-1.5 uppercase">
-          <span className="size-1.5 rounded-full bg-[#a78bfa] animate-pulse" /> PRODUCTION_READY
+          <span className="size-1.5 rounded-full bg-accent animate-pulse" /> PRODUCTION_READY
         </span>
         <a
           href={project.repoUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-gradient hover:opacity-80 transition-opacity"
+          className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-accent hover:text-accent/80 transition-colors"
         >
           EXPLORE CODE <ArrowUpRight className="size-3.5" />
         </a>

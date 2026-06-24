@@ -26,7 +26,7 @@ export function HomePage() {
   }, [])
 
   return (
-    <div className="space-y-20 sm:space-y-24">
+    <div className="space-y-16 sm:space-y-20">
       <section className="grid items-start gap-12 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="pt-1">
           <div className="terminal-pill">
@@ -34,11 +34,11 @@ export function HomePage() {
             <span className="font-mono">{person.terminalIntro}</span>
           </div>
 
-          <h1 className="display mt-6 text-[clamp(2.4rem,8vw,3.75rem)] font-extrabold leading-[1.05] sm:text-7xl text-gradient">
+          <h1 className="mt-6 text-[clamp(2.2rem,7vw,3.5rem)] font-extrabold leading-tight tracking-tight sm:text-6xl text-fg">
             <span className="block">{headlineLine1}</span>
-            {headlineLine2 ? <span className="block">{headlineLine2}</span> : null}
+            {headlineLine2 ? <span className="block text-accent">{headlineLine2}</span> : null}
           </h1>
-          <p className="mt-6 measure text-pretty text-[15px] leading-relaxed text-muted sm:text-lg">
+          <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
             {person.subheadline}
           </p>
 
@@ -54,7 +54,7 @@ export function HomePage() {
             </a>
           </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="mt-4 flex flex-wrap items-center gap-3">
             <a className="btn" href={person.links.github} target="_blank" rel="noreferrer">
               <Code className="size-4" /> GitHub
             </a>
@@ -69,7 +69,7 @@ export function HomePage() {
           </div>
 
           <div className="panel mt-12 p-6">
-            <div className="eyebrow">Terminal</div>
+            <div className="text-xs uppercase tracking-wider text-muted font-semibold">Terminal</div>
             <div className="mt-3 font-mono text-sm text-fg">
               <span className="text-accent">$</span> {person.terminalIntro}
             </div>
@@ -78,42 +78,34 @@ export function HomePage() {
         </div>
 
         <div className="relative lg:pt-8">
-          <div
-            className="pointer-events-none absolute -inset-6 -z-10 opacity-70"
-            style={{
-              background:
-                'radial-gradient(700px circle at 40% 10%, hsl(var(--accent) / 0.22), transparent 60%), radial-gradient(520px circle at 70% 70%, hsl(var(--fg) / 0.06), transparent 62%)',
-              filter: 'blur(18px)',
-            }}
-          />
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="panel rounded-[2rem] p-7"
+            className="panel p-6 sm:p-8"
           >
             <div className="flex items-center justify-between">
               <div>
-                <div className="eyebrow">Profile</div>
+                <div className="text-xs uppercase tracking-wider text-muted font-semibold">Profile</div>
                 <div className="mt-2 text-sm font-semibold tracking-tight">{person.name}</div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-accent/80" />
+                <span className="size-2 rounded-full bg-accent animate-pulse" />
                 <span className="text-xs text-muted">Available</span>
               </div>
             </div>
 
-            <div className="mt-7 overflow-hidden rounded-2xl border border-border/75">
+            <div className="mt-6 overflow-hidden rounded-xl border border-border">
               {profileOk ? (
                 <img
                   src={profileSrc}
                   alt="Prateek Sinha"
-                  className="h-[280px] w-full object-cover sm:h-[360px]"
+                  className="h-[280px] w-full object-cover sm:h-[320px]"
                   loading="eager"
                   onError={() => setProfileOk(false)}
                 />
               ) : (
-                <div className="flex h-[280px] w-full items-center justify-center bg-bg/40 sm:h-[360px]">
+                <div className="flex h-[280px] w-full items-center justify-center bg-bg/40 sm:h-[320px]">
                   <div className="flex items-center gap-2 text-sm text-muted">
                     <ImageOff className="size-4" />
                     <span>Missing profile.jpg</span>
@@ -122,7 +114,7 @@ export function HomePage() {
               )}
             </div>
 
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {[
                 { label: 'Focus', value: 'AI systems' },
                 { label: 'Strength', value: 'RAG + LLMs' },
@@ -130,10 +122,10 @@ export function HomePage() {
               ].map((i) => (
                 <div
                   key={i.label}
-                  className="rounded-2xl border border-border/70 bg-bg/35 p-3"
+                  className="rounded-xl border border-border bg-bg/35 p-3"
                 >
                   <div className="text-[11px] font-medium text-muted">{i.label}</div>
-                  <div className="mt-1 text-sm font-semibold tracking-tight">
+                  <div className="mt-1 text-sm font-semibold tracking-tight text-fg">
                     {i.value}
                   </div>
                 </div>
@@ -143,30 +135,32 @@ export function HomePage() {
         </div>
       </section>
 
-      <div className="h-px w-full hairline" />
-
-      <section className="panel p-8 sm:p-10">
-        <div className="grid gap-8 md:grid-cols-3 md:divide-x md:divide-border/80">
-          {[
-            {
-              title: 'Recruiter-first clarity',
-              desc: 'Tight summaries, readable stacks, and quick access to repos.',
-            },
-            {
-              title: 'Systems mindset',
-              desc: 'I build end-to-end pipelines: ingestion → retrieval → reasoning → UX.',
-            },
-            {
-              title: 'Premium execution',
-              desc: 'Typography, spacing, and motion tuned for a polished presentation.',
-            },
-          ].map((c, idx) => (
-            <div key={c.title} className={idx > 0 ? "md:pl-8" : ""}>
-              <h3 className="text-base font-bold tracking-tight text-gradient font-mono">{c.title}</h3>
-              <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-muted">{c.desc}</p>
+      <section className="grid gap-6 sm:grid-cols-3">
+        {[
+          {
+            value: 'Top 25',
+            label: 'All-India Rank',
+            desc: 'HackHazard 2025 (Monad Track) out of hundreds of engineering teams.',
+          },
+          {
+            value: '8+',
+            label: 'Open-Source Projects',
+            desc: 'Covering custom RAG systems, LLM fine-tuning benchmarks, and RL arenas.',
+          },
+          {
+            value: '100%',
+            label: 'Reproducible Code',
+            desc: 'All pipelines structured with clear modules, test scripts, and README files.',
+          },
+        ].map((m) => (
+          <div key={m.label} className="panel p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <span className="text-3xl sm:text-4xl font-extrabold text-accent font-mono">{m.value}</span>
+              <h3 className="text-sm font-semibold tracking-tight text-fg mt-2">{m.label}</h3>
             </div>
-          ))}
-        </div>
+            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted">{m.desc}</p>
+          </div>
+        ))}
       </section>
 
       <section>
@@ -176,10 +170,10 @@ export function HomePage() {
               <span className="text-accent">●</span>
               <span>Featured project</span>
             </div>
-            <h2 className="display mt-5 text-4xl font-semibold leading-[1.08] sm:text-5xl">
+            <h2 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">
               {featuredProject.title}
             </h2>
-            <p className="mt-4 measure text-[15px] leading-relaxed text-muted">
+            <p className="mt-3 text-base text-muted max-w-2xl">
               {featuredProject.tagline}
             </p>
           </div>
@@ -193,3 +187,4 @@ export function HomePage() {
     </div>
   )
 }
+
