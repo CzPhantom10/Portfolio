@@ -1,190 +1,127 @@
-import { ArrowRight, Download, Code, BriefcaseBusiness, ImageOff } from 'lucide-react'
+import { ArrowRight, Download, MapPin } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { useMemo, useState } from 'react'
-import { featuredProject, person } from '../data/portfolio'
+import { useState } from 'react'
+import { achievements, education, featuredProject, person, projects } from '../data/portfolio'
 import { ProjectCard } from '../components/projects/ProjectCard'
+import { ProjectCity } from '../components/scene/ProjectCity'
+
+const resumeHref = `${import.meta.env.BASE_URL}resume.pdf`
+const profileSrc = `${import.meta.env.BASE_URL}profile.jpg`
+
+const stats = [
+  { value: 'Top 100', label: 'of 8,600+ at HackHazard 2025', color: 'bg-coral text-cream' },
+  { value: `${projects.length}`, label: 'AI, ML and data projects built', color: 'bg-mint text-ink' },
+  { value: education.cgpa, label: `CGPA · B.Tech CSE, ${education.endYear}`, color: 'bg-sun text-ink' },
+]
 
 export function HomePage() {
   const [profileOk, setProfileOk] = useState(true)
-  const profileSrc = useMemo(
-    () => `${import.meta.env.BASE_URL}profile.jpg`,
-    [],
-  )
-  const resumeHref = useMemo(
-    () => `${import.meta.env.BASE_URL}resume.pdf`,
-    [],
-  )
-
-  const [headlineLine1, headlineLine2] = useMemo(() => {
-    const raw = person.headline.trim()
-    const commaIndex = raw.indexOf(',')
-    if (commaIndex === -1) return [raw, '']
-    const line1 = `${raw.slice(0, commaIndex + 1)}`
-    const line2 = raw.slice(commaIndex + 1).trim()
-    return [line1, line2]
-  }, [])
 
   return (
-    <div className="space-y-16 sm:space-y-20">
-      <section className="grid items-start gap-12 lg:grid-cols-[1.25fr_0.75fr]">
-        <div className="pt-1">
-          <div className="terminal-pill">
-            <span className="text-accent">$</span>
-            <span className="font-mono">{person.terminalIntro}</span>
+    <div className="space-y-20 sm:space-y-24">
+      {/* Hero */}
+      <section className="grid items-end gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <div className="flex items-center gap-3">
+            {profileOk ? (
+              <img
+                src={profileSrc}
+                alt={person.name}
+                onError={() => setProfileOk(false)}
+                className="size-14 rounded-full border-[2.5px] border-ink object-cover shadow-pop"
+              />
+            ) : null}
+            <div className="flex flex-col items-start">
+              <div className="eyebrow">{person.role}</div>
+              <div className="mt-1.5 inline-flex items-center gap-1 text-sm font-semibold text-fg/80">
+                <MapPin className="size-3.5" /> {person.location}
+              </div>
+            </div>
           </div>
 
-          <h1 className="mt-6 text-[clamp(2.2rem,7vw,3.5rem)] font-extrabold leading-tight tracking-tight sm:text-6xl text-fg">
-            <span className="block">{headlineLine1}</span>
-            {headlineLine2 ? <span className="block text-accent">{headlineLine2}</span> : null}
+          <h1 className="headline mt-6 text-[clamp(2.6rem,8vw,5rem)] leading-[1.02]">
+            Hi, I'm {person.firstName}.
+            <br />
+            I build <span className="squiggle text-sun">AI that ships</span>
+            <motion.span
+              className="ml-3 inline-block align-middle text-[0.6em] [-webkit-text-stroke:0] [text-shadow:none]"
+              animate={{ rotate: [0, 18, -8, 18, 0] }}
+              transition={{ duration: 1.6, delay: 0.8 }}
+              aria-hidden
+            >
+              👋
+            </motion.span>
           </h1>
-          <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
-            {person.subheadline}
+
+          <p className="mt-6 max-w-xl text-pretty text-lg font-medium leading-relaxed text-fg/85">
+            {person.summary}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link to="/projects" className="btn btn-primary">
-              View projects <ArrowRight className="size-4" />
+              Explore projects <ArrowRight className="size-4" />
             </Link>
-            <Link to="/contact" className="btn">
-              Contact
-            </Link>
-            <a className="btn" href={resumeHref} target="_blank" rel="noreferrer">
+            <a className="btn btn-sun" href={resumeHref} target="_blank" rel="noreferrer">
               Resume <Download className="size-4" />
             </a>
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <a className="btn" href={person.links.github} target="_blank" rel="noreferrer">
-              <Code className="size-4" /> GitHub
-            </a>
-            <a
-              className="btn"
-              href={person.links.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <BriefcaseBusiness className="size-4" /> LinkedIn
-            </a>
-          </div>
-
-          <div className="panel mt-12 p-6">
-            <div className="text-xs uppercase tracking-wider text-muted font-semibold">Terminal</div>
-            <div className="mt-3 font-mono text-sm text-fg">
-              <span className="text-accent">$</span> {person.terminalIntro}
-            </div>
-            <div className="mt-2 font-mono text-sm text-muted">{person.terminalOutput}</div>
+            <Link to="/contact" className="btn">
+              Get in touch
+            </Link>
           </div>
         </div>
 
-        <div className="relative lg:pt-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="panel p-6 sm:p-8"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-wider text-muted font-semibold">Profile</div>
-                <div className="mt-2 text-sm font-semibold tracking-tight">{person.name}</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-xs text-muted">Available</span>
-              </div>
-            </div>
-
-            <div className="mt-6 overflow-hidden rounded-xl border border-border">
-              {profileOk ? (
-                <img
-                  src={profileSrc}
-                  alt="Prateek Sinha"
-                  className="h-[280px] w-full object-cover sm:h-[320px]"
-                  loading="eager"
-                  onError={() => setProfileOk(false)}
-                />
-              ) : (
-                <div className="flex h-[280px] w-full items-center justify-center bg-bg/40 sm:h-[320px]">
-                  <div className="flex items-center gap-2 text-sm text-muted">
-                    <ImageOff className="size-4" />
-                    <span>Missing profile.jpg</span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              {[
-                { label: 'Focus', value: 'AI systems' },
-                { label: 'Strength', value: 'RAG + LLMs' },
-                { label: 'Style', value: 'Clean delivery' },
-              ].map((i) => (
-                <div
-                  key={i.label}
-                  className="rounded-xl border border-border bg-bg/35 p-3"
-                >
-                  <div className="text-[11px] font-medium text-muted">{i.label}</div>
-                  <div className="mt-1 text-sm font-semibold tracking-tight text-fg">
-                    {i.value}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+        <div className="pt-16 lg:pt-0">
+          <ProjectCity />
         </div>
       </section>
 
-      <section className="grid gap-6 sm:grid-cols-3">
-        {[
-          {
-            value: 'Top 25',
-            label: 'All-India Rank',
-            desc: 'HackHazard 2025 (Monad Track) out of hundreds of engineering teams.',
-          },
-          {
-            value: '8+',
-            label: 'Open-Source Projects',
-            desc: 'Covering custom RAG systems, LLM fine-tuning benchmarks, and RL arenas.',
-          },
-          {
-            value: '100%',
-            label: 'Reproducible Code',
-            desc: 'All pipelines structured with clear modules, test scripts, and README files.',
-          },
-        ].map((m) => (
-          <div key={m.label} className="panel p-6 sm:p-8 flex flex-col justify-between">
-            <div>
-              <span className="text-3xl sm:text-4xl font-extrabold text-accent font-mono">{m.value}</span>
-              <h3 className="text-sm font-semibold tracking-tight text-fg mt-2">{m.label}</h3>
-            </div>
-            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted">{m.desc}</p>
-          </div>
+      {/* Stats */}
+      <section className="grid gap-5 sm:grid-cols-3">
+        {stats.map((s, i) => (
+          <motion.div
+            key={s.label}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 + i * 0.08 }}
+            className="sticker sticker-hover flex items-center gap-4 p-5"
+          >
+            <span className={`shrink-0 rounded-2xl border-[2.5px] border-ink px-3 py-2 font-display text-2xl font-bold ${s.color}`}>
+              {s.value}
+            </span>
+            <span className="text-sm font-semibold leading-snug text-card-muted">{s.label}</span>
+          </motion.div>
         ))}
       </section>
 
+      {/* Featured */}
       <section>
-        <div className="mb-8 flex items-end justify-between gap-6">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <div className="terminal-pill">
-              <span className="text-accent">●</span>
-              <span>Featured project</span>
-            </div>
-            <h2 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">
-              {featuredProject.title}
-            </h2>
-            <p className="mt-3 text-base text-muted max-w-2xl">
-              {featuredProject.tagline}
-            </p>
+            <div className="eyebrow">Featured build</div>
+            <h2 className="headline mt-2 text-4xl sm:text-5xl">Latest in town</h2>
           </div>
-          <Link to="/projects" className="btn hidden sm:inline-flex">
-            See all <ArrowRight className="size-4" />
+          <Link to="/projects" className="btn">
+            All projects <ArrowRight className="size-4" />
           </Link>
         </div>
-
-        <ProjectCard project={featuredProject} />
+        <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+          <ProjectCard project={featuredProject} />
+          <div className="sticker flex flex-col gap-4 p-6">
+            <div className="eyebrow self-start !bg-coral !text-cream">Hackathon wins</div>
+            {achievements.slice(0, 2).map((a) => (
+              <div key={a.title} className="rounded-2xl border-[2.5px] border-ink bg-sun/25 p-4">
+                <div className="font-display text-2xl font-bold">{a.rank}</div>
+                <div className="font-semibold">{a.title}</div>
+                <div className="text-sm text-card-muted">{a.detail}</div>
+              </div>
+            ))}
+            <Link to="/achievements" className="btn mt-auto self-start">
+              See all <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   )
 }
-

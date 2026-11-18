@@ -41,12 +41,12 @@ export function RouteErrorPage() {
         description={message}
       />
 
-      <div className="rounded-3xl border border-border bg-card/40 p-6">
+      <div className="sticker p-6">
         <div className="flex items-center gap-2 text-sm font-semibold">
-          <AlertTriangle className="size-4 text-accent" />
+          <AlertTriangle className="size-4 text-coral" />
           Details
         </div>
-        <pre className="mt-3 overflow-auto rounded-2xl border border-border bg-bg/40 p-4 text-xs text-muted">
+        <pre className="mt-3 overflow-auto rounded-2xl border-2 border-ink p-4 text-xs text-card-muted">
 {String(error)}
         </pre>
       </div>

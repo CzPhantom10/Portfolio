@@ -6,14 +6,14 @@ export function ProjectsPage() {
   return (
     <div>
       <SectionHeader
-        eyebrow="/projects"
-        title="Selected work"
-        description="Recruiter-friendly summaries of projects focused on intelligent systems, retrieval, and practical engineering."
+        eyebrow="Projects"
+        title="Things I've built"
+        description="Applied AI, retrieval, fine tuning, analytics and reinforcement learning. Each one measured, not just demoed."
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+      <div className="grid gap-7 md:grid-cols-2">
+        {projects.map((p, i) => (
+          <ProjectCard key={p.slug} project={p} index={i} />
         ))}
       </div>
     </div>

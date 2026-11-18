@@ -8,9 +8,9 @@ export function NotFoundPage() {
   return (
     <div>
       <SectionHeader
-        eyebrow="/404"
-        title="Page not found"
-        description={`No route matches: ${location.pathname}`}
+        eyebrow="404"
+        title="No building at this address"
+        description={`Nothing lives at ${location.pathname}.`}
       />
 
       <div className="flex flex-wrap items-center gap-3">
@@ -23,11 +23,6 @@ export function NotFoundPage() {
           Go back
         </button>
       </div>
-
-      <p className="mt-8 text-sm text-muted">
-        If you were trying to open a file like <span className="font-mono">/resume.pdf</span>,
-        make sure it exists in the app’s public folder.
-      </p>
     </div>
   )
 }

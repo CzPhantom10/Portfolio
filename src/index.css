@@ -1,90 +1,180 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Theme tokens (HSL channels) */
+/*
+  "Code Town" theme: a hand drawn cartoon city.
+  Colours are RGB channels so Tailwind can apply alpha.
+*/
 :root {
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: 'Fredoka', ui-rounded, system-ui, sans-serif;
+  --font-sans: 'Nunito', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Light flat theme */
-  --bg: 240 5.9% 98%;
-  --fg: 240 10% 3.9%;
-  --muted: 240 3.8% 46.1%;
-  --card: 0 0% 100%;
-  --border: 240 5.9% 90%;
-  --accent: 142.1 76.2% 36.3%; /* Emerald 600 */
+  /* Fixed palette */
+  --ink: 27 21 48;
+  --cream: 255 249 240;
+  --coral: 255 107 107;
+  --sun: 255 200 70;
+  --mint: 110 225 180;
+  --lilac: 184 164 255;
+  --sky: 120 190 255;
+
+  /* Day */
+  --fg: 27 21 48;
+  --muted: 70 64 102;
+  --card: 255 249 240;
+  --card-fg: 27 21 48;
+  --card-muted: 92 86 122;
+  --sky-top: #6f9cf2;
+  --sky-mid: #a7c9f6;
+  --sky-low: #ffd9c2;
+  --window-off: 255 249 240;
+  --window-on: 255 249 240;
+  --building-shade: 0.92;
+
+  color-scheme: light;
 }
 
 .dark {
-  /* Dark flat theme */
-  --bg: 240 10% 3.9%;
-  --fg: 0 0% 98%;
-  --muted: 240 5% 64.9%;
-  --card: 240 10% 5.9%;
-  --border: 240 3.7% 15.9%;
-  --accent: 142.1 70.6% 45.3%; /* Emerald 500 */
+  --fg: 255 249 240;
+  --muted: 205 196 236;
+  --card: 58 44 108;
+  --card-fg: 255 249 240;
+  --card-muted: 210 200 240;
+  --ink: 10 7 22;
+  --sky-top: #120a2a;
+  --sky-mid: #2e1856;
+  --sky-low: #5c2462;
+  --window-off: 60 48 100;
+  --window-on: 255 210 110;
+  --building-shade: 0.62;
+
+  color-scheme: dark;
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
+    background: var(--sky-top);
   }
 
   body {
-    @apply bg-bg text-fg antialiased;
-    position: relative;
+    @apply text-fg antialiased;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
   }
 
   ::selection {
-    background: hsl(var(--accent) / 0.2);
+    background: rgb(var(--sun) / 0.6);
+    color: rgb(27 21 48);
+  }
+
+  :focus-visible {
+    outline: 3px solid rgb(var(--sun));
+    outline-offset: 3px;
+    border-radius: 12px;
   }
 }
 
 @layer components {
-  .text-gradient {
-    @apply text-accent;
-  }
-
   .container-pad {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-8;
   }
 
-  .hairline {
-    @apply bg-border h-px w-full;
+  /* Sky backdrop, fixed behind everything */
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-low) 100%);
+    transition: background 0.6s ease;
   }
 
-  .terminal-pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted;
+  /* Outlined display headline, like a sticker */
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: rgb(var(--cream));
+    -webkit-text-stroke: 2px rgb(var(--ink));
+    paint-order: stroke fill;
+    text-shadow: 4px 4px 0 rgb(var(--ink));
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border-2 border-ink bg-sun px-3 py-0.5 font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-ink shadow-pop-sm;
+  }
+
+  .sticker {
+    @apply rounded-[22px] border-[2.5px] border-ink bg-card text-card-fg shadow-pop;
+  }
+
+  .sticker-hover {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .sticker-hover:hover {
+    transform: translate(-2px, -3px) rotate(-0.4deg);
+    @apply shadow-pop-lg;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-fg transition-colors duration-150;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-[2.5px] border-ink bg-cream px-4 py-2 font-display text-sm font-semibold text-ink shadow-pop;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
   }
-
   .btn:hover {
-    @apply border-accent text-accent;
+    transform: translate(-1px, -2px);
+    @apply shadow-pop-lg;
+  }
+  .btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 0 rgb(var(--ink));
   }
 
   .btn-primary {
-    @apply bg-accent border-transparent text-bg font-semibold;
+    @apply bg-coral text-cream;
+  }
+  .btn-sun {
+    @apply bg-sun text-ink;
   }
 
-  .btn-primary:hover {
-    @apply opacity-90 text-bg border-transparent;
+  .chip {
+    @apply inline-flex items-center rounded-full border-2 border-ink bg-cream px-2.5 py-0.5 font-mono text-[11px] font-medium text-ink;
   }
 
-  .panel {
-    @apply relative rounded-2xl border border-border bg-card;
+  /* Wavy underline doodle */
+  .squiggle {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q10 0 20 5 T40 5' fill='none' stroke='%23ffc846' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: 0 100%;
+    background-size: 40px 10px;
+    padding-bottom: 12px;
   }
+}
 
-  .panel-hover {
-    @apply transition-colors duration-150;
-  }
+@keyframes drift {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(120vw); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
 
-  .panel-hover:hover {
-    @apply border-accent;
-  }
+.animate-drift { animation: drift linear infinite; }
+.animate-twinkle { animation: twinkle 3s ease-in-out infinite; }
+.animate-bob { animation: bob 3.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift, .animate-twinkle, .animate-bob { animation: none; }
+  .sticker-hover:hover, .btn:hover { transform: none; }
 }

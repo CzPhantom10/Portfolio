@@ -1,18 +1,43 @@
 import { NavLink, Link, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Menu, Moon, Sun, Terminal, X } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Menu, Moon, Sun, X } from 'lucide-react'
+import { useState } from 'react'
 import type { Theme } from '../../lib/theme'
 import { cn } from '../../lib/cn'
-import { useEffect, useState } from 'react'
 
 const nav = [
   { to: '/', label: 'Home' },
   { to: '/projects', label: 'Projects' },
-  { to: '/achievements', label: 'Hackathons' },
+  { to: '/achievements', label: 'Wins' },
   { to: '/about', label: 'About' },
   { to: '/resume', label: 'Resume' },
   { to: '/contact', label: 'Contact' },
 ]
+
+function ThemeSwitch({ theme, onChange }: { theme: Theme; onChange: (t: Theme) => void }) {
+  const night = theme === 'dark'
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={night}
+      aria-label={night ? 'Switch to day' : 'Switch to night'}
+      onClick={() => onChange(night ? 'light' : 'dark')}
+      className="relative h-10 w-[74px] shrink-0 rounded-full border-[2.5px] border-ink bg-cream shadow-pop transition-colors dark:bg-[#2e1856]"
+    >
+      <motion.span
+        layout
+        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        className={cn(
+          'absolute top-[3px] flex size-[28px] items-center justify-center rounded-full border-2 border-ink',
+          night ? 'right-[4px] bg-cream' : 'left-[4px] bg-sun',
+        )}
+      >
+        {night ? <Moon className="size-3.5 text-ink" /> : <Sun className="size-3.5 text-ink" />}
+      </motion.span>
+    </button>
+  )
+}
 
 export function Navbar({
   theme,
@@ -21,107 +46,88 @@ export function Navbar({
   theme: Theme
   onThemeChange: (t: Theme) => void
 }) {
-  const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
-
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [location.pathname])
+  // The menu stays open only on the page it was opened from, so navigating closes it.
+  const [openOn, setOpenOn] = useState<string | null>(null)
+  const open = openOn === location.pathname
+  const setOpen = (fn: (v: boolean) => boolean) =>
+    setOpenOn(fn(open) ? location.pathname : null)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg/70 backdrop-blur">
-      <div className="container-pad flex h-16 items-center justify-between">
-        <Link
-          to="/"
-          className="group inline-flex items-center gap-2 text-sm font-semibold tracking-tight"
-        >
-          <span className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-card">
-            <Terminal className="size-4 text-muted" />
-          </span>
-          <span className="text-fg">Prateek Sinha</span>
-          <span className="hidden text-muted sm:inline">— Portfolio</span>
-        </Link>
+    <header className="sticky top-0 z-40 pt-3 sm:pt-4">
+      <div className="container-pad">
+        <div className="sticker flex h-16 items-center justify-between gap-3 !rounded-full px-3 sm:px-4">
+          <Link to="/" className="group inline-flex min-w-0 items-center gap-2.5">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-[2.5px] border-ink bg-coral font-display text-base font-bold text-cream transition-transform group-hover:-rotate-12">
+              PS
+            </span>
+            <span className="truncate font-display text-lg font-semibold">Prateek Sinha</span>
+          </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {nav.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                cn(
-                  'rounded-full px-3 py-2 text-sm transition',
-                  isActive ? 'bg-card text-fg' : 'text-muted hover:text-fg',
-                )
-              }
+          <nav className="hidden items-center gap-1 lg:flex">
+            {nav.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/'}
+                className={({ isActive }) =>
+                  cn(
+                    'rounded-full border-2 px-3.5 py-1.5 font-display text-sm font-semibold transition',
+                    isActive
+                      ? 'border-ink bg-sun text-ink shadow-pop-sm'
+                      : 'border-transparent text-card-muted hover:text-card-fg',
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <ThemeSwitch theme={theme} onChange={onThemeChange} />
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="btn size-10 !p-0 lg:hidden"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
             >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <motion.button
-            type="button"
-            onClick={() => setMobileOpen((v) => !v)}
-            whileTap={{ scale: 0.98 }}
-            className="btn h-10 w-10 px-0 md:hidden"
-            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
-          >
-            {mobileOpen ? <X className="size-4" /> : <Menu className="size-4" />}
-          </motion.button>
-
-          <motion.button
-            type="button"
-            onClick={() => onThemeChange(theme === 'dark' ? 'light' : 'dark')}
-            whileTap={{ scale: 0.98 }}
-            className="btn h-10 w-10 px-0"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <Sun className="size-4" />
-            ) : (
-              <Moon className="size-4" />
-            )}
-          </motion.button>
+              {open ? <X className="size-4" /> : <Menu className="size-4" />}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <motion.div
-        id="mobile-nav"
-        initial={false}
-        animate={mobileOpen ? 'open' : 'closed'}
-        variants={{
-          open: { height: 'auto', opacity: 1 },
-          closed: { height: 0, opacity: 0 },
-        }}
-        transition={{ duration: 0.22, ease: 'easeOut' }}
-        className="md:hidden overflow-hidden"
-      >
-        <div className="container-pad pb-4">
-          <nav className="panel p-2">
-            <div className="grid gap-1">
+        <AnimatePresence>
+          {open && (
+            <motion.nav
+              id="mobile-nav"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18 }}
+              className="sticker mt-3 grid gap-1 p-2 lg:hidden"
+            >
               {nav.map((item) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
+                  end={item.to === '/'}
                   className={({ isActive }) =>
                     cn(
-                      'rounded-2xl px-4 py-3 text-sm font-medium transition',
-                      isActive
-                        ? 'bg-bg/40 text-fg'
-                        : 'text-muted hover:bg-bg/30 hover:text-fg',
+                      'rounded-2xl px-4 py-3 font-display font-semibold',
+                      isActive ? 'bg-sun text-ink' : 'text-card-fg hover:bg-ink/5',
                     )
                   }
                 >
                   {item.label}
                 </NavLink>
               ))}
-            </div>
-          </nav>
-        </div>
-      </motion.div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+      </div>
     </header>
   )
 }

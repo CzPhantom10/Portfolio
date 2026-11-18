@@ -8,16 +8,13 @@ export function SectionHeader({
   description?: string
 }) {
   return (
-    <header className="mb-8">
-      <div className="terminal-pill">
-        <span className="text-accent">●</span>
-        <span>{eyebrow}</span>
-      </div>
-      <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+    <header className="mb-10">
+      <div className="eyebrow">{eyebrow}</div>
+      <h1 className="headline mt-3 text-balance text-[clamp(2.4rem,7vw,4rem)] leading-[1.05]">
         {title}
       </h1>
       {description ? (
-        <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-muted">
+        <p className="mt-4 max-w-2xl text-pretty text-base font-medium leading-relaxed text-fg/85 sm:text-lg">
           {description}
         </p>
       ) : null}
