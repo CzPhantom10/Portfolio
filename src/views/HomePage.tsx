@@ -10,7 +10,7 @@ const resumeHref = `${import.meta.env.BASE_URL}resume.pdf`
 const profileSrc = `${import.meta.env.BASE_URL}profile.jpg`
 
 const stats = [
-  { value: 'Top 100', label: 'of 8,600+ at HackHazard 2025', color: 'bg-coral text-cream' },
+  { value: 'Top 25', label: 'global rank at HackHazard 2025 (Monad Track)', color: 'bg-coral text-cream' },
   { value: `${projects.length}`, label: 'AI, ML and data projects built', color: 'bg-mint text-ink' },
   { value: education.cgpa, label: `CGPA · B.Tech CSE, ${education.endYear}`, color: 'bg-sun text-ink' },
 ]
